@@ -1,4 +1,9 @@
+global._ = require('underscore');
 var d3 = require('d3');
+
+var ci = require('../statistics/confidenceInterval').ci;
+var stddev = require('../statistics/stddev').stddev;
+
 function graph(data, title) {
     //Margin, Width and height
     var margin = {
@@ -29,7 +34,7 @@ function graph(data, title) {
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(10, "%");
+        .ticks(100, "%");
 
     //appending Axis
     var svg = d3.select("body").append("svg")
@@ -48,7 +53,7 @@ function graph(data, title) {
         .attr("y", 16)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text('hour');
+        .text('hour (PST)');
 
 
     svg.append("g")
@@ -74,15 +79,34 @@ function graph(data, title) {
             return i * width / data.length;
         })
         .attr("y", function(d, i) {
-            return height - 10 * d;
+            return height - height * d;
         })
         .attr("width", function(d, i) {
             return width / data.length - barPadding;
         })
         .attr("height", function(d, i) {
-            return 10 * d;
+            return height * d;
         })
+    // appending confidence Interval
 
-
+    svg.selectAll(".line")
+        .data(data)
+        .enter()
+        .append('line')
+        .attr('class', "line")
+        .attr('x1', function(d, i) {
+            return i * width / data.length + width / data.length / 2;
+        })
+        .attr('x2', function(d, i) {
+            return i * width / data.length + width / data.length / 2;
+        })
+        .attr('y1', function(d, i) {
+            return height - height * d + stddev(d, 1000) * height;
+        })
+        .attr('y2', function(d, i) {
+            return height - height * d - stddev(d, 1000) * height;
+        })
+        .attr('stroke-width', 2)
+        .attr('stroke', "black");
 }
-
+module.exports.graph = graph;
