@@ -1,0 +1,22 @@
+{
+    "name": "expressApp",
+    "description": "express for fun",
+    "scripts": {
+        "test": "./node_modules/mocha/bin/mocha"
+    },
+    "dependencies": {
+        "underscore": "*",
+        "step": "*",
+        "request": "*",
+        "express": "*",
+        "moment": "*",
+        "d3": "*",
+        "jade": "*",
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "should":"*",
+        "chai": "*",
+        "expect": "*"
+    }
+}
