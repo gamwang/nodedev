@@ -1,0 +1,12 @@
+{
+	"name": "learnyounode",
+	"description": "learning node.js",
+	"dependencies": {
+		"bl": "*",
+		"async": "*",
+		"path": "*",
+		"http": "*",	
+		"through2-map": "*",
+		"url": "*"
+	}	
+}
